@@ -66,7 +66,7 @@ May - December 2018; Practicum Student, Hourly, Valley Cities - Rainier Beach, S
 
 **Purpose:** A sample R environment to demonstrate analytic skills and technique, with a cache of select recent project (cleaned for external audiences).
 
-[**Project Folders -**]{.underline}
+[**Project Folders**]{.underline}
 
 -   data
 
