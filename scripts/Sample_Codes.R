@@ -6,37 +6,18 @@ library(sf)             # for spatial / GIS (if using shapefiles / maps)
 library(MatchIt)        # for propensity score matching (optional)
 library(broom)          # for tidy model outputs
 
-# 1. Load datasets
-
-# Example: load PLACES county-level data
-
-# Example: load AHRF county-level data
-
-# Example: load CDOH contextual data (if using)
-
-# (Optional) Other datasets: e.g. NCHS survey data, Medicare / MMD export, etc.
-
-# 2. Inspect / clean data
 
 # View first rows
-head()
+head(combined_data)
 
 # Summary statistics
-summary()
+summary(combined_data)
 
 # Check missingness
-colSums(is.na())
-
-# 3. Harmonize / select key variables + rename as needed
-# e.g., ensure a common geographic identifier (county FIPS code) for merging
-
-x2 <- x %>%
-  rename(fips = COUNTYFIPS, # or whatever the column name is
-         outcome_var = SOME_HEALTH_OUTCOME_COLUMN)
+colSums(is.na(combined_data))
 
 
-
-# 5. Exploratory data analysis (EDA)
+### Exploratory data analysis (EDA)
 
 # e.g., scatterplot: provider density vs outcome
 ggplot(df, aes(x = x, y = y)) +
