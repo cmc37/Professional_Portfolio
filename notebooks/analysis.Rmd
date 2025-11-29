@@ -1,0 +1,10 @@
+---
+title: "Sample Analysis"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+df <- read_csv("data/clinic_data.csv")
+summary(df)
+```

@@ -1,0 +1,106 @@
+
+---
+title: "Causal Inference Starter Notebook — EHR Example"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(lubridate)
+library(MatchIt)
+library(WeightIt)
+library(cobalt)
+library(sandwich)
+library(lmtest)
+library(fixest)
+library(EValue)
+```
+
+## Load data
+```{r}
+df  %>%
+  mutate(visit_date = ymd(visit_date),
+         clinic_adoption_date = ymd(clinic_adoption_date),
+         post_adoption = if_else(visit_date >= clinic_adoption_date, 1, 0))
+glimpse(df)
+```
+
+## 1 — Descriptive summaries
+```{r}
+df %>% summarize(n_visits = n(),
+                 n_patients = n_distinct(patient_id),
+                 n_clinics = n_distinct(clinic_id))
+df %>% count(visit_type)
+```
+
+## 2 — Propensity score (patient-level) for bup initiation (matching example)
+```{r}
+# create an analysis dataset at the visit-level for patients at risk of bup initiation
+anal <- df %>% 
+  mutate(outcome = bup_init) %>%
+  select(patient_id, clinic_id, age, sex, race, bmi, chronic_pain, depression, prior_opioid_rx, treated_clinic, outcome)
+
+anal <- na.omit(anal)
+
+m <- matchit(outcome ~ age + sex + race + bmi + chronic_pain + depression + prior_opioid_rx + treated_clinic,
+             data = anal, method = "nearest", ratio = 1)
+summary(m)
+matched <- match.data(m)
+love.plot(bal.tab(m), thresholds = c(m = 0.1))
+```
+
+## 3 — IPTW and doubly robust estimation for retention among those who initiated bup
+```{r}
+# consider only visits where bup_init == 1
+bup_df <- df %>% filter(bup_init == 1) %>% mutate(treated = treated_clinic)
+
+ps_mod <- glm(treated ~ age + sex + race + bmi + chronic_pain + depression + prior_opioid_rx,
+              data = bup_df, family = binomial)
+bup_df$ps <- predict(ps_mod, type = "response")
+bup_df <- bup_df %>% mutate(w = if_else(treated==1, 1/ps, 1/(1-ps)))
+
+dr <- glm(retention_6m ~ treated + age + sex + chronic_pain + depression + prior_opioid_rx,
+          data = bup_df, weights = w, family = binomial)
+coeftest(dr, vcov = sandwich::vcovCL(dr, cluster = ~clinic_id))
+```
+
+## 4 — Difference-in-Differences (clinic-level aggregation)
+```{r}
+clinic_month <- df %>%
+  mutate(month = floor_date(visit_date, "month")) %>%
+  group_by(clinic_id, month, clinic_adoption_date) %>%
+  summarize(bup_rate = mean(bup_init, na.rm=TRUE),
+            opioid_rate = mean(opioid_rx, na.rm=TRUE),
+            treated_clinic = first(treated_clinic)) %>%
+  ungroup() %>%
+  mutate(post = if_else(month >= clinic_adoption_date, 1, 0))
+
+# simple DiD using fixest for clinic and month fixed effects
+did <- feglm(opioid_rate ~ post*treated_clinic | clinic_id + month, data = clinic_month, family="gaussian")
+summary(did)
+```
+
+## 5 — Interrupted Time Series for a single clinic
+```{r}
+library(dynlm)
+clinic_ts <- clinic_month %>% filter(clinic_id == clinic_month$clinic_id[1]) %>%
+  arrange(month) %>%
+  mutate(time = as.numeric(difftime(month, min(month), units="days"))/30,
+         time_after = if_else(month >= clinic_adoption_date[1], time - (as.numeric(difftime(clinic_adoption_date[1], min(month), units="days"))/30), 0),
+         intervention = if_else(month >= clinic_adoption_date[1], 1, 0))
+
+its_mod <- lm(opioid_rate ~ time + intervention + time_after, data = clinic_ts)
+coeftest(its_mod, vcov = sandwich::NeweyWest(its_mod, lag = 3))
+```
+
+## 6 — Sensitivity: E-value for an observed RR (example)
+```{r}
+# example: suppose we observed an RR of 1.4 for an exposure
+evalue::evalues.RR(est = 1.4, lo = 1.2, hi = 1.6)
+```
+
+## Save a short results table
+```{r}
+write_csv(clinic_month, "outputs/clinic_month_rates.csv")
+```
