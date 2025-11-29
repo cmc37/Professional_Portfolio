@@ -33,15 +33,18 @@
 **Miscellaneous:**
 
 **COMPLETE PROFESSIONAL EXPERIENCE**
-**August 2022 – Present; Evaluations and Analytics Coordinator,** Full-Time, King County Regional Homelessness Authority, Seattle, WA, Projects: Creating population specific (Veterans, Incarcerated, and AI/AN) By Name Lists, Point-In-Time Count, Governing Board Reports, All Research Related Data Request, Data Request Tracking and Management, Data Sharing Agreements and Work Orders, and Systems Evaluations.
 
-**September 2019 – July 2022; Research Health Science Specialist (Project Manager),** Full-Time, Department of Veterans Affairs, VAPSHCS, Seattle, WA, Project: Understanding Racial Inequities in Fibroids Care for Veterans; PIs: Jodie G. Katon, PhD., MS and Lisa S. Callegari, MD, MPH
+**August 2022 – Present; Evaluations and Analytics Coordinator (Sr. Data Analyst),** Full-Time, King County Regional Homelessness Authority, Seattle, WA, Projects: Creating population specific (Veterans, Incarcerated, and AI/AN) By Name Lists, Point-In-Time Count, Governing Board Reports, All Research Related Data Request, Data Request Tracking and Management, Data Sharing Agreements and Work Orders, and Systems Evaluations.
 
-**July 2018 – March 2019; Research Assistant**, Part-Time; University of Washington, School of Medicine, Dept. of Rehab Med; Project: GET Smart; PI: Charles Bombardier, PhD, Department of Rehabilitation Medicine
+**February 2022 – July 2022;** Qualitative Reseracher,Consultant, Senturia Consulting, Seattle, WA, Project: Colorado Park and Community Engagement (Bureau of Land Management; Trust for Public Land
 
-**July 2018 – December 2018; Data Analyst**, Hourly, Michigan State University, Department of Epidemiology; Project: Vida PURA II; PI: India J. Ornelas, PhD, MPH (Grant recipient)
+**September 2019 – July 2022;** Research Health Science Specialist (Project Manager and Mixed-Methods Researcher),Full-Time, Department of Veterans Affairs, VAPSHCS, Seattle, WA, Project: Understanding Racial Inequities in Fibroids Care for Veterans; PIs: Jodie G. Katon, PhD., MS and Lisa S. Callegari, MD, MPH
 
-**June 2018 – September 2018; Project Coordinator,** Hourly, University of Washington, School of Public Health’s Dean Office; Project: Robert Wood Johnson Health Professional Summer Internship; SPH Climate Survey Analysis, Supervisor: Victoria Gardner, PhD, School of Public Health
+**July 2018 – March 2019; Research Assistant**, Part-Time; University of Washington, School of Medicine, Dept. of Rehab Med; Project: GET Smart Multiple Sclerosis Randomized Control Trial; PI: Charles Bombardier, PhD, Department of Rehabilitation Medicine
+
+**July 2018 – December 2018; Data Analyst**, Hourly, Michigan State University, Department of Epidemiology; Project: Vida PURA II - Unhealthy Drinking Habits of Latino Immigrant Men; PI: India J. Ornelas, PhD, MPH (Grant recipient)
+
+**June 2018 – September 2018; Project Coordinator,** Hourly, University of Washington, School of Public Health’s Dean Office; Project: Robert Wood Johnson Health Professional Summer Internship - Undergraduate Pre-Medicine and Public Health Trainer; SPH Climate Survey Analysis, Supervisor: Victoria Gardner, PhD, School of Public Health
 
 **October 2016 – July 2017; Research Assistant**, Volunteer; University of Washington, Dept. of Psychology, Center for the Science of Social Connections, Project: Cultural Cognitions and Actions Survey (CCAS); PI: Jonathan Kanter, PhD, Department of Psychology
 
