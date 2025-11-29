@@ -8,6 +8,8 @@
 
 **Screenshot or link to interactive output:**
 
+------------------------------------------------------------------------
+
 **Link profiles and most recent manuscripts:**
 
 -   Profiles-
@@ -54,19 +56,45 @@ May - December 2018; Intern, Hourly, Bloodwork, Seattle, WA, Project: Diversity/
 
 -   Produced a report on ways to increase diversity in lab-tech level workforce.
 
+May - December 2018; Practicum Student, Hourly, Valley Cities - Rainier Beach, Seattle, WA, Project: Community Needs Assessment; Supervisor:
+
+-   Produced a report on immediate needs of the Rainier Beach catchment area surrounding the new branch site.
+
+------------------------------------------------------------------------
+
 **PORTFOLIO PROJECTS BY FOLDER**
 
-Project Folders -
+**Purpose:** A sample R environment to demonstrate analytic skills and technique, with a cache of select recent project (cleaned for external audiences).
+
+[**Project Folders -**]{.underline}
 
 -   data
+
+    -   AHRF
+
+    -   PLACES (CDC)
+
+    -   sdoh_data
 
 -   outputs
 
 -   scripts
 
+    -   clean_data
+
+    -   run_instructions
+
+    -   Sample_Codes
+
 -   notebooks
 
-    -   Samples
+    -   Analysis_Template
 
-        -   Governing Board Report
-        -   BNL (Active Status) Methodology Documentation
+    -   analysis(NAMETBD)
+
+    -   casual_inference_starter
+
+        -   Samples
+
+            -   Governing Board Report
+            -   BNL (Active Status) Methodology Documentation
