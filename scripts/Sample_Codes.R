@@ -9,13 +9,6 @@ library(broom)          # for tidy model outputs
 # 1. Load datasets
 
 # Example: load PLACES county-level data
-# PLACES county data for Washington state
-url <- "https://chronicdata.cdc.gov/resource/8zp3-5tjh.csv?$where=stateabbr='WA'"
-places <- read_csv(url)
-
-head(places)
-
-
 
 # Example: load AHRF county-level data
 

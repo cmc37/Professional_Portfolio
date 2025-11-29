@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 editor_options: 
   markdown: 
@@ -23,3 +24,6 @@ MPH](https://www.linkedin.com/in/catheamcarey/)
 List of projects (title, dataset, skills demonstrated) Project Folders
 -\> data outputs scripts notebooks Samples Governing Board Report BNL
 (Active Status) Methodology Documentation
+=======
+# Professional_Portfolio
+>>>>>>> 026efabafcee8ea52428281e8c859af59714a59e
