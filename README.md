@@ -8,7 +8,7 @@
 
 ------------------------------------------------------------------------
 
-**Link profiles and most recent manuscripts:**
+## **Link profiles and most recent manuscripts:**
 
 -   Profiles-
 
@@ -30,7 +30,7 @@
 
 ------------------------------------------------------------------------
 
-**Miscellaneous:**
+## **Miscellaneous Experience:**
 
 **COMPLETE PROFESSIONAL EXPERIENCE**
 
@@ -96,30 +96,20 @@ May - December 2018; Practicum Student, Hourly, Valley Cities - Rainier Beach, S
 
 ------------------------------------------------------------------------
 
-**PORTFOLIO PROJECTS BY FOLDER**
+## **Table of Contents: Professional Portfolio**
 
 **Purpose:** A sample R environment to demonstrate analytic skills and technique, with a cache of select recent project (cleaned for external audiences).
 
 -   data
-
     -   AHRF
-
     -   PLACES (CDC)
-
     -   sdoh_data
-
 -   outputs
-
 -   scripts
-
     -   clean_data
-
     -   run_instructions
-
     -   Sample_Codes
-
 -   notebooks
-
     -   Analysis_Template
 
     -   analysis(NAMETBD)
@@ -127,6 +117,5 @@ May - December 2018; Practicum Student, Hourly, Valley Cities - Rainier Beach, S
     -   casual_inference_starter
 
         -   Samples
-
             -   Governing Board Report
             -   BNL (Active Status) Methodology Documentation
