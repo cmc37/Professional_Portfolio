@@ -5,8 +5,6 @@ output: html_document
 
 ```{r Distribution of Resources, warning=FALSE, echo=FALSE}
 #Static Summary Tables (DATASOURCE AHRF)
-library(dplyr)
-library(janitor)
 #Primary Care Physicians, Patient Care (2022); Nurse Practi. with NPI (2022); Total Number of Hospitals (2022)
 resource_vars <- combined_data %>%
   select(phys_nf_prim_care_pc_exc_rsdt_22, np_npi_22  , hosp_22)
@@ -29,7 +27,6 @@ resource_summary <- resource_vars %>%
 resource_summary
 
 #Distribution Plots
-library(ggplot2)
 ggplot(combined_data, aes(x = phys_nf_prim_care_pc_exc_rsdt_22)) +
   geom_histogram(bins = 30) +
   theme_minimal() +
@@ -66,15 +63,15 @@ ggplot(combined_data, aes(x = popn_22, y = phys_nf_prim_care_pc_exc_rsdt_22)) +
 
 ```
 
-```{r Health Outcomes, warning=FALSE, echo=FALSE}
-#Selected Chronic Health Outcomes (DATASOURCE CDC)
-#Selected Health Outcomes - preset category field
+```{r Health Outcomes|Prevention|Disablility, warning=FALSE, echo=FALSE}
+#Selected Chronic Health Outcomes (DATASOURCE CDC in 2024)
+# Filter to PLACES subset
 health_outcomes_vars <- combined_data %>%
   filter(Category == "Health Outcomes")
 
   #Numeric transformation
     health_outcomes_numeric <- health_outcomes_vars %>%
-    select(where(is.numeric))
+  select(where(is.numeric))
 
 #Descriptive Summary Table
 health_outcomes_summary <- health_outcomes_numeric %>%
@@ -93,27 +90,59 @@ health_outcomes_summary <- health_outcomes_numeric %>%
   janitor::clean_names()
 
 #Table
-library(gt)
-
 health_outcomes_table <- health_outcomes_summary %>%
   gt() %>%
   tab_header(
     title = "Health Outcomes Summary",
-    subtitle = "CDC PLACES Indicators — County Level"
+    subtitle = "CDC PLACES Indicators — County Level (2024)"
   )
 
 
 
 #Plot Distribution
-library(ggplot2)
-
 health_outcome_plots <- health_outcomes_numeric %>%
   pivot_longer(cols = everything(), names_to = "measure", values_to = "value") %>%
   ggplot(aes(x = value)) +
   geom_histogram(bins = 30) +
   facet_wrap(~ measure, scales = "free") +
   theme_minimal() +
-  labs(title = "Distribution of Health Outcomes Measures")
+  labs(title = "Distribution of Health Outcomes Measures (2024)")
+
+
+#Boxplot
+  ggplot(health_outcomes_numeric %>% 
+           pivot_longer(everything(), names_to="measure", values_to="value"),
+         aes(x = measure, y = value)) +
+    geom_boxplot() +
+    coord_flip() +
+    theme_minimal()
+
+
+
+###-----------------------------------Complete workflow
+summarize_category <- function(df, cat) {
+  df %>%
+    filter(Category == cat) %>%
+    select(where(is.numeric)) %>%
+    summarise(across(
+      everything(),
+      list(
+        mean   = ~mean(.x, na.rm = TRUE),
+        sd     = ~sd(.x, na.rm = TRUE),
+        min    = ~min(.x, na.rm = TRUE),
+        q25    = ~quantile(.x, 0.25, na.rm = TRUE),
+        median = ~median(.x, na.rm = TRUE),
+        q75    = ~quantile(.x, 0.75, na.rm = TRUE),
+        max    = ~max(.x, na.rm = TRUE)
+      )
+    )) %>%
+    janitor::clean_names()
+}
+
+# Examples:
+prevention_summary      <- summarize_category(combined_data, "Prevention")
+disability_summary      <- summarize_category(combined_data, "Disability")
+health_outcomes_summary <- summarize_category(combined_data, "Health Outcomes")
 
 
 
