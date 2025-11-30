@@ -3,18 +3,108 @@ title: "Sample Dashboard and Report Write-Up"
 output: html_document
 ---
 
-```{r, warning=FALSE, echo=FALSE}
+```{r Distribution of Resources, warning=FALSE, echo=FALSE}
+
+#Static Summary Tables
+library(dplyr)
+library(janitor)
+#Primary Care Physicians, Patient Care (2022); Nurse Practi. with NPI (2022); Total Number of Hospitals (2022)
+resource_vars <- combined_data %>%
+  select(phys_nf_prim_care_pc_exc_rsdt_22, np_npi_22  , hosp_22)
+
+resource_summary <- resource_vars %>%
+  summarise(across(
+    everything(),
+    list(
+      mean   = ~mean(.x, na.rm = TRUE),
+      sd     = ~sd(.x, na.rm = TRUE),
+      min    = ~min(.x, na.rm = TRUE),
+      q25    = ~quantile(.x, 0.25, na.rm = TRUE),
+      median = ~median(.x, na.rm = TRUE),
+      q75    = ~quantile(.x, 0.75, na.rm = TRUE),
+      max    = ~max(.x, na.rm = TRUE)
+    )
+  )) %>%
+  janitor::clean_names()
+
+resource_summary
+
+#Distribution Plots
+library(ggplot2)
+ggplot(combined_data, aes(x = phys_nf_prim_care_pc_exc_rsdt_22)) +
+  geom_histogram(bins = 30) +
+  theme_minimal() +
+  labs(title = "Distribution of Physician Density (per 100k) in 2022") #right skewed
+ggplot(combined_data, aes(x = np_npi_22)) +
+  geom_histogram(bins = 30) +
+  theme_minimal() +
+  labs(title = "Distribution of Nurse Practitioner Density (per 100k) in 2022")  #right skewed
+ggplot(combined_data, aes(x = hosp_22)) +
+  geom_histogram(bins = 30) +
+  theme_minimal() +
+  labs(title = "Distribution of Number of Hospitals in 2022")  #right skewed
+
+
 
 ```
 
-```{r, warning=FALSE, echo=FALSE}
+```{r Workforce Density, warning=FALSE, echo=FALSE}
+#Summary
+workforce_vars <- combined_data %>% #Same Resources from Distr. Plots
+  select(phys_nf_prim_care_pc_exc_rsdt_22, np_npi_22)
+
+workforce_summary <- workforce_vars %>%
+  summarise(across(everything(), list(mean = mean, median = median, sd = sd),
+                    na.rm = TRUE))
+
+workforce_summary
+#Plot Workforce Density and Population (2022)
+ggplot(combined_data, aes(x = popn_22, y = phys_nf_prim_care_pc_exc_rsdt_22)) +
+  geom_point(alpha = 0.3) +
+  theme_minimal() +
+  labs(title = "Workforce Density and County Population in 2022")
+
 
 ```
 
-```{r, warning=FALSE, echo=FALSE}
+```{r Health Outcomes, warning=FALSE, echo=FALSE}
+#Selected Chronic Health Outcomes
+chronic_h_outcome_vars <- combined_data %>%
+  select(diabetes, obesity, poor_health)
+
+chronic_outcome_summary <- chronic_h_outcome_vars %>%
+  summarise(across(everything(), list(mean = mean, median = median, sd = sd),
+                    na.rm = TRUE))
+
+chronic_outcome_summary
+
+#Selected Health Outcomes
+h_outcome_vars <- combined_data %>%
+  select(cancer, mental_health, poor_health)
+
+outcome_summary <- h_outcome_vars %>%
+  summarise(across(everything(), list(mean = mean, median = median, sd = sd),
+                    na.rm = TRUE))
+
+outcome_summary
+
+
+#Plot Heatmap or correlations
+library(corrplot)
+#Selected Chronic Health Outcomes
+  cor_matrix <- cor(chronic_h_outcome_vars, use="pairwise.complete.obs")
+  corrplot(cor_matrix, method = "color")
+#Selected Health Outcomes
+  cor_matrix <- cor(h_outcome_vars, use="pairwise.complete.obs")
+  corrplot(cor_matrix, method = "color")
+
 
 ```
 
-```{r, warning=FALSE, echo=FALSE}
+```{r Prevention, warning=FALSE, echo=FALSE}
+
+```
+
+```{r Test of Association between Workforce Density and Prention, warning=FALSE, echo=FALSE}
 
 ```
