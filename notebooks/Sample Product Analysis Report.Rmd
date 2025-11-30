@@ -63,7 +63,7 @@ ggplot(combined_data, aes(x = popn_22, y = phys_nf_prim_care_pc_exc_rsdt_22)) +
 
 ```
 
-```{r Health Outcomes|Prevention|Disablility, warning=FALSE, echo=FALSE}
+```{r Health Outcomes ONLY, warning=FALSE, echo=FALSE}
 #Selected Chronic Health Outcomes (DATASOURCE CDC in 2024)
 # Filter to PLACES subset
 health_outcomes_vars <- combined_data %>%
@@ -106,7 +106,7 @@ health_outcome_plots <- health_outcomes_numeric %>%
   geom_histogram(bins = 30) +
   facet_wrap(~ measure, scales = "free") +
   theme_minimal() +
-  labs(title = "Distribution of Health Outcomes Measures (2024)")
+  labs(title = "Distribution of Health Outcomes Measures Version 1 (2024)")
 
 
 #Boxplot
@@ -115,10 +115,17 @@ health_outcome_plots <- health_outcomes_numeric %>%
          aes(x = measure, y = value)) +
     geom_boxplot() +
     coord_flip() +
-    theme_minimal()
+    theme_minimal()+
+  labs(title = "Distribution of Health Outcomes Measures Version 2 (2024)")
 
 
 
+
+
+
+```
+
+```{r Outcomes, warning=FALSE, echo=FALSE}
 ###-----------------------------------Complete workflow
 summarize_category <- function(df, cat) {
   df %>%
@@ -145,22 +152,8 @@ disability_summary      <- summarize_category(combined_data, "Disability")
 health_outcomes_summary <- summarize_category(combined_data, "Health Outcomes")
 
 
-
-```
-
-```{r Prevention, warning=FALSE, echo=FALSE}
-#Prevention Summary
-prevention_vars <- combined_data %>%
-  select(flu_vax, cholesterol_screening)
-
-prevention_summary <- prevention_vars %>%
-  summarise(across(everything(), list(mean = mean, median = median, sd = sd),
-                    na.rm = TRUE))
-
-prevention_summary
-
 #Plot Prevention 
-ggplot(combined_data, aes(x = flu_vax)) +
+ggplot(combined_data, aes(x = summarize_category)) +
   geom_histogram(bins = 30) +
   theme_minimal() +
   labs(title = "Distribution of Flu Vaccination Rates")
@@ -171,12 +164,13 @@ ggplot(combined_data, aes(x = flu_vax)) +
 ```{r Test of Association between Workforce Density and Prention, warning=FALSE, echo=FALSE}
 
 #Option 1
-model1 <- lm(flu_vax ~ phys_nf_prim_care_pc_exc_rsdt_22, data = combined_data)
+model1 <- lm(summarize_category ~ phys_nf_prim_care_pc_exc_rsdt_22, data = combined_data)
 summary(model1)
 
-#Option 2
-model2 <- lm(flu_vax ~ phys_nf_prim_care_pc_exc_rsdt_22 + median_income + pct_black +
-               pct_hispanic + pct_over65 + rural_urban_status,
+#Option 2 2020 Census  AI/AN, Black, NHPI,65+ in poverty
+model2 <- lm(summarize_category ~ phys_nf_prim_care_pc_exc_rsdt_22 + 
+               popn_aian_pct_20 + popn_bl_pct_20 + popn_nhpi_pct_20 +
+               popn_hsp_pct_20 + pers_deep_povty_ge65_pct_22 + rural_urban_contnm_23, #attempt - need better flag for rurality
              data = combined_data)
 
 summary(model2)
