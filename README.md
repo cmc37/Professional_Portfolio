@@ -1,10 +1,8 @@
 ------------------------------------------------------------------------
 
-------------------------------------------------------------------------
-
 # Portfolio
 
-Education:
+**Education:**
 
 University of Washington (Seattle, WA)
 
@@ -125,3 +123,5 @@ May - December 2018; Practicum Student, Hourly, Valley Cities - Rainier Beach, S
         -   Samples
             -   Governing Board Report
             -   BNL (Active Status) Methodology Documentation
+
+------------------------------------------------------------------------
