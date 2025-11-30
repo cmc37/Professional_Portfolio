@@ -1,0 +1,20 @@
+---
+title: "Sample Dashboard and Report Write-Up"
+output: html_document
+---
+
+```{r, warning=FALSE, echo=FALSE}
+
+```
+
+```{r, warning=FALSE, echo=FALSE}
+
+```
+
+```{r, warning=FALSE, echo=FALSE}
+
+```
+
+```{r, warning=FALSE, echo=FALSE}
+
+```
