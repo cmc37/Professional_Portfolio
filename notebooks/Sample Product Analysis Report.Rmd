@@ -4,8 +4,7 @@ output: html_document
 ---
 
 ```{r Distribution of Resources, warning=FALSE, echo=FALSE}
-
-#Static Summary Tables
+#Static Summary Tables (DATASOURCE AHRF)
 library(dplyr)
 library(janitor)
 #Primary Care Physicians, Patient Care (2022); Nurse Practi. with NPI (2022); Total Number of Hospitals (2022)
@@ -49,7 +48,7 @@ ggplot(combined_data, aes(x = hosp_22)) +
 ```
 
 ```{r Workforce Density, warning=FALSE, echo=FALSE}
-#Summary
+#Summary (DATASOURCE AHRF)
 workforce_vars <- combined_data %>% #Same Resources from Distr. Plots
   select(phys_nf_prim_care_pc_exc_rsdt_22, np_npi_22)
 
@@ -68,43 +67,111 @@ ggplot(combined_data, aes(x = popn_22, y = phys_nf_prim_care_pc_exc_rsdt_22)) +
 ```
 
 ```{r Health Outcomes, warning=FALSE, echo=FALSE}
-#Selected Chronic Health Outcomes
-chronic_h_outcome_vars <- combined_data %>%
-  select(diabetes, obesity, poor_health)
+#Selected Chronic Health Outcomes (DATASOURCE CDC)
+#Selected Health Outcomes - preset category field
+health_outcomes_vars <- combined_data %>%
+  filter(Category == "Health Outcomes")
 
-chronic_outcome_summary <- chronic_h_outcome_vars %>%
-  summarise(across(everything(), list(mean = mean, median = median, sd = sd),
-                    na.rm = TRUE))
+  #Numeric transformation
+    health_outcomes_numeric <- health_outcomes_vars %>%
+    select(where(is.numeric))
 
-chronic_outcome_summary
+#Descriptive Summary Table
+health_outcomes_summary <- health_outcomes_numeric %>%
+  summarise(across(
+    everything(),
+    list(
+      mean   = ~mean(.x, na.rm = TRUE),
+      sd     = ~sd(.x, na.rm = TRUE),
+      min    = ~min(.x, na.rm = TRUE),
+      q25    = ~quantile(.x, 0.25, na.rm = TRUE),
+      median = ~median(.x, na.rm = TRUE),
+      q75    = ~quantile(.x, 0.75, na.rm = TRUE),
+      max    = ~max(.x, na.rm = TRUE)
+    )
+  )) %>%
+  janitor::clean_names()
 
-#Selected Health Outcomes
-h_outcome_vars <- combined_data %>%
-  select(cancer, mental_health, poor_health)
+#Table
+library(gt)
 
-outcome_summary <- h_outcome_vars %>%
-  summarise(across(everything(), list(mean = mean, median = median, sd = sd),
-                    na.rm = TRUE))
+health_outcomes_table <- health_outcomes_summary %>%
+  gt() %>%
+  tab_header(
+    title = "Health Outcomes Summary",
+    subtitle = "CDC PLACES Indicators — County Level"
+  )
 
-outcome_summary
 
 
-#Plot Heatmap or correlations
-library(corrplot)
-#Selected Chronic Health Outcomes
-  cor_matrix <- cor(chronic_h_outcome_vars, use="pairwise.complete.obs")
-  corrplot(cor_matrix, method = "color")
-#Selected Health Outcomes
-  cor_matrix <- cor(h_outcome_vars, use="pairwise.complete.obs")
-  corrplot(cor_matrix, method = "color")
+#Plot Distribution
+library(ggplot2)
+
+health_outcome_plots <- health_outcomes_numeric %>%
+  pivot_longer(cols = everything(), names_to = "measure", values_to = "value") %>%
+  ggplot(aes(x = value)) +
+  geom_histogram(bins = 30) +
+  facet_wrap(~ measure, scales = "free") +
+  theme_minimal() +
+  labs(title = "Distribution of Health Outcomes Measures")
+
 
 
 ```
 
 ```{r Prevention, warning=FALSE, echo=FALSE}
+#Prevention Summary
+prevention_vars <- combined_data %>%
+  select(flu_vax, cholesterol_screening)
+
+prevention_summary <- prevention_vars %>%
+  summarise(across(everything(), list(mean = mean, median = median, sd = sd),
+                    na.rm = TRUE))
+
+prevention_summary
+
+#Plot Prevention 
+ggplot(combined_data, aes(x = flu_vax)) +
+  geom_histogram(bins = 30) +
+  theme_minimal() +
+  labs(title = "Distribution of Flu Vaccination Rates")
+
 
 ```
 
 ```{r Test of Association between Workforce Density and Prention, warning=FALSE, echo=FALSE}
+
+#Option 1
+model1 <- lm(flu_vax ~ phys_nf_prim_care_pc_exc_rsdt_22, data = combined_data)
+summary(model1)
+
+#Option 2
+model2 <- lm(flu_vax ~ phys_nf_prim_care_pc_exc_rsdt_22 + median_income + pct_black +
+               pct_hispanic + pct_over65 + rural_urban_status,
+             data = combined_data)
+
+summary(model2)
+#Association Plot
+ggplot(combined_data, aes(x = phys_nf_prim_care_pc_exc_rsdt_22, y = flu_vax)) +
+  geom_point(alpha = 0.25) +
+  geom_smooth(method = "lm") +
+  theme_minimal() +
+  labs(title = "Association Between Physician Density and Flu Vaccination")
+#Rurality Stratification
+model_rural <- lm(flu_vax ~ phys_nf_prim_care_pc_exc_rsdt_22, 
+                  data = combined_data %>% filter(rural_urban_status == "Rural"))
+
+model_urban <- lm(flu_vax ~ phys_nf_prim_care_pc_exc_rsdt_22, 
+                  data = combined_data %>% filter(rural_urban_status == "Urban"))
+#Interaction Term
+model_interaction <- lm(flu_vax ~ phys_nf_prim_care_pc_exc_rsdt_22 * rural_urban_status,
+                         data = combined_data)
+summary(model_interaction)
+
+#Multiple Prevention Outcomes
+models <- lm(cholesterol_screening ~ phys_nf_prim_care_pc_exc_rsdt_22 + median_income + pct_over65,
+             data = combined_data)
+summary(models)
+
 
 ```
