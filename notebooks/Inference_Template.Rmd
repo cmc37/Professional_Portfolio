@@ -1,0 +1,47 @@
+
+---
+title: "Template for Inferential Analysis"
+output: html_document
+---
+## Establish Environment and Load
+```{r setup, include=FALSE}
+
+```
+
+## Clean Data - Create bins or other calculated fields for following analysis (1 -5)
+```{r}
+
+```
+
+## 1 — Table 1 Descriptive
+```{r}
+
+```
+
+## 2 — Table 2 Explore Effect
+```{r}
+
+
+```
+
+## 3 — Plot Placeholder for visual
+```{r}
+
+
+```
+
+## 4 — Association of the effect (treatment or condition and measure outcome)
+```{r}
+
+```
+
+## 5 — Plot Placeholder for visual
+```{r}
+
+```
+
+## Final Reporting Table 1 - N and Plot(s)
+```{r}
+
+```
+
