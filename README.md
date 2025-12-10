@@ -104,6 +104,10 @@ May - December 2018; Practicum Student, Hourly, Valley Cities - Rainier Beach, S
 
 **Purpose:** A sample R environment to demonstrate analytic skills and technique, with a cache of select recent project (cleaned for external audiences).
 
+-   Skills_Assessment_Dec_2025
+    -   data_dictionary
+    -   pilot_rct_data
+    -   Skills_Assessment_Instructions
 -   data
     -   AHRF
     -   PLACES (CDC)
@@ -116,12 +120,12 @@ May - December 2018; Practicum Student, Hourly, Valley Cities - Rainier Beach, S
 -   notebooks
     -   Analysis_Template
 
-    -   analysis(NAMETBD)
+    -   Inference_Template
 
-    -   casual_inference_starter
+    -   Large_Dataset_Practice_draft
 
         -   Samples
-            -   Governing Board Report
-            -   BNL (Active Status) Methodology Documentation
+            -   Governing Board Report - pending
+            -   BNL (Active Status) Methodology Documentation - pending
 
 ------------------------------------------------------------------------

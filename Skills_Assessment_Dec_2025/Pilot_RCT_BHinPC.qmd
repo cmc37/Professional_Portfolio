@@ -1,0 +1,88 @@
+---
+title: "Pilot_RCT_BHinPC"
+format: html
+author: "Cathea M. Carey, MPH"
+date: "12/8/25"
+output:
+  powerpoint_presentation:
+    reference_doc: PPT_Template_16x9-A_2023.pptx # UW Branded Template A from: https://www.washington.edu/brand/templates/presentations/
+---
+
+# Background
+
+Behavioral Health (BH) is defined as X. Commonly delivered in Y settings, and in the United States' health care system often are inaccessible to populations who would benefit from BH interventions due to reason A- (cite), reason B (cite), and reason C (cite).
+
+Primary Care (PC) is often a seen as a secondary health care setting that provides primary intervention for both physical and behavioral needs. PC access and utilization are associated with better outcome A - C.
+
+BH interventions in PC have the shown potential to 1) loneliness and 2) depression as this setting have the added benefit of primary intervention or initial identification while the patient is potentially more motivated in PC rather than waiting for a referral (cite) or co-located BH/MH on-site (cite).
+
+This small randomized control trial (RCT) aims to understand the feasibility of a BH intervention in Primary Care. The sample consists of 40 participants, equally weighted in the intervention (BH) and control (Treatment-as-usual or TAU). The data-set consists of intervention arm (BH/TAU), participant demographics (Age, Race/Ethnicity, Gender, and Income), measurement of outcomes (primary = loneliness; secondary = depression) at 3 time points (baseline, 3 months follow-up, and 6 months follow-up), and attendance for all 6 intervention session (Intervention arm = BH only).
+
+# Decision Logs
+
+## Pre-ETL - Prior to Establishing the Environment
+
+The Pre-Work before starting the assessment began with reviewing the "Skills_Assessment_Instructions.docx" and "data_dictionary.xlsx" files. During Pre-Work for the Assessment, the following thoughts came to mind:
+
+-   What are the standard bins or categories for the following known continuous variables to measure the outcomes (primary = loneliness; secondary = depression):
+
+    -   Age (for this research aim: Behavioral Health Interventions in Primary Care),
+    -   PHQ-9 (measure for secondary outcome = depression),
+    -   and UCLA - L20 (measure for primary outcome = loneliness)
+
+-   **NOTE:** Gender outputs - Question what source(s) for outputs or standards for Gender were used? I've seen Gender reported as Gender Identify (a specific operationally defined construct with consistent industry standards) and Sexual Identity. I would suggest aligned with Office of Management and Budget's demographic standards back in 2024.
+
+-   Additional Calculated field for Race/Ethnicity since a "self-described" output would likely result in small Ns.
+
+-   **Caution:** Given the small sample size, external publications of findings should follow data suppression standards (such as Journals or Governmental entities).
+
+```{r ETL, echo=FALSE, warning=FALSE}
+
+#Data is on external drive
+# Check driver for files
+list.files("/Volumes/LaCie/DropBox/Github/Skills_Assessment_Dec_2025")
+# Read xslx file path 
+file_path <- "/Volumes/LaCie/DropBox/Github/Skills_Assessment_Dec_2025/pilot_rct_data.xlsx"  
+               sheet_names <- excel_sheets(path = file_path)
+
+
+# Inspect first few rows
+
+
+
+
+### END - NOW HAVE CONNECTED DATA FILES FOR CLEANING AND ANALYSIS
+
+```
+
+## Post-ETL
+
+### Make Calculated Fields
+
+-   Age (bins)
+-   Race/Ethnicity (New Variable Names/Labels)
+    1.  Preserves the Categories with new field; one-hot encoding for select all option not needed
+-   PHQ-9 Total (by time points)
+-   PHQ-9 X Sub-categories (by time points)
+-   UCLA-L20 Total (by time points)
+-   UCLA-L20 X Sub-categories (by time points)
+-   Attendance (bins)
+    1.  Preserve time-point attendance; additional overall attendance output for high-level trend (signal and keeps option for treatment dosage effects).
+
+## Post-Table 1
+
+# Skills Assessment Documentation:
+
+## Rationale for Specific Output of R
+
+Below is the R Code created to assess the following skills of the author (myself):
+
+-   Ability to handle and prepare real-world data,
+
+-   strategies behind analysis choices,
+
+-   interpretation of results in context of a small, pilot RCT,
+
+-   and overall clarity and accessibility of the communication of the above.
+
+I believe this documentation shows through the RMD function 1) incline comments and choices for project/team documentation and replicability, 2) use of a repository to decrease staff time needed to tailor communication findings to various outputs, and 3) RMD output with PowerPoint Presentation (PPT), Word Document or PDF (industry standard or open source static documents to review), and Webpage (HMTL) for easy intra-team QA/QI for the shared potential increase audience comprehension through multiple outputs with click of a button.
