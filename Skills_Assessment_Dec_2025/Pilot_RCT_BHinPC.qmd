@@ -98,8 +98,8 @@ head(df)
 -   Attendance (bins)
     1.  Preserve time-point attendance; additional overall attendance output for high-level trend (signal and keeps option for treatment dosage effects).
         1.  Prop = (full dose/'yes'+ 1/2 partial dose/'partial')/ total dosage (all 6 sessions)
--   Missingness
-    -   Create a Flag for records missing 1 or more elements (UCLA-LS-20; PHQ-9; Race/Ethnicity)
+
+Note: Create a Flag for records missing 1 or more elements (UCLA-LS-20; PHQ-9; Race/Ethnicity)
 
 ```{r ETL Part 2, echo=FALSE, warning=FALSE, results='hide'}
 # Create Calculated fields
@@ -243,7 +243,7 @@ df$dosage_prop <- (rowSums(df[, 95:100] == "yes", na.rm = TRUE) + #treats yes as
 df$trt_dosage <- cut(
   df$dosage_prop,
   breaks = c(-0.01, 0, 0.33, 0.66, 1),   # include 0 as its own interval
-  labels = c("Control", "Minimal Intervention", "Partial Intervention", "Maximum Intervention")
+  labels = c("Control", "Minimal Treatment", "Partial Treatment", "Full Treatment")
 )
 
 # Make subsets for potential comparison analysis and data quality check
@@ -256,19 +256,27 @@ subset_TAUarm_df <- subset(df, arm == "Control") #spot check to make sure left j
 ### Tables 1: Pilot Sample Characteristics (N=40)
 
 ```{r Table 1, echo=FALSE, warning=FALSE}
+#Overall Dosage for Summary and to answer Q1
+#average
+avg_trt_dosage <- mean(subset_BHarm_df$trt_dosage_total)
+#standard deviation
+sd_trt_dosage <- sd(subset_BHarm_df$trt_dosage_total)
+#median
+mdn_trt_dosage <- median(subset_BHarm_df$trt_dosage_total)
 
-# Select variables
+
+# Table 1 Var
 demo_char_table1 <- df %>%
-  select(arm, age_range, gender, raceethnicity_recoded, phq_b_total, ucla_b_total, trt_dosage)
+  select(arm, age_range, gender, raceethnicity_recoded, phq_b_total, phq_3_total, phq_6_total, ucla_b_total, ucla_3_total, ucla_6_total,trt_dosage, trt_dosage_total, income)
 
-# Ensure arm is a factor
+# Level with intervention arm
 demo_char_table1$arm <- factor(demo_char_table1$arm, levels = c("Intervention", "Control"))
 
-# Separate categorical vs continuous variables
+# Prep diff var types
 categorical_vars <- c("age_range", "gender", "raceethnicity_recoded", "trt_dosage")
-continuous_vars <- c("phq_b_total", "ucla_b_total")
+continuous_vars <- c("phq_b_total", "phq_3_total","phq_6_total","ucla_b_total", "ucla_3_total","ucla_6_total","income", "trt_dosage_total")
 
-# 1. Summarize categorical variables as N (%)
+# Cat variables as N (%)
 cat_table <- demo_char_table1 %>%
   select(arm, all_of(categorical_vars)) %>%
   pivot_longer(cols = -arm, names_to = "characteristic", values_to = "value") %>%
@@ -287,26 +295,33 @@ cat_table <- demo_char_table1 %>%
   pivot_wider(names_from = arm, values_from = n_perc, values_fill = "0 (0%)") %>%
   arrange(characteristic)
 
-# 2. Summarize continuous variables as Mean (SD)
+# Cont. variables as Mean (SD)
 cont_table <- demo_char_table1 %>%
   select(arm, all_of(continuous_vars)) %>%
   pivot_longer(cols = -arm, names_to = "characteristic", values_to = "value") %>%
   filter(!is.na(value)) %>%
   mutate(characteristic = recode(characteristic,
-                                 phq_b_total = "PHQ-9 (Mean(SD))",
-                                 ucla_b_total = "UCLA - LS - 20 (Mean(SD))")) %>%
+                                 phq_b_total = "PHQ-9 at baseline (Mean(SD))",
+                                 phq_3_total = "PHQ-9 at 3 months (Mean(SD))",
+                                 phq_6_total = "PHQ-9 at 6 months (Mean(SD))",                                 
+                                 ucla_b_total = "UCLA - LS - 20 at baseline (Mean(SD))",
+                                 ucla_3_total = "UCLA - LS - 20 at 3 months(Mean(SD))",
+                                 ucla_6_total = "UCLA - LS - 20 at 6 months (Mean(SD))",
+                                 income = "Annual Household Income in USD (Mean(SD))",
+                                 trt_dosage_total = "Total Doseage of Treatment (Mean(SD))"
+                                 )) %>%
   group_by(characteristic, arm) %>%
   summarise(mean_sd = paste0(round(mean(value),1), " (", round(sd(value),1), ")"),
             .groups = "drop") %>%
   pivot_wider(names_from = arm, values_from = mean_sd)
 
-# 3. Combine categorical and continuous summaries
+# Combine both type of vars tables
 demo_table <- bind_rows(cat_table, cont_table)
 
 # Clean column names
 demo_table <- demo_table %>% janitor::clean_names()
 
-# 4. Render GT table
+# Final Table
 demo_table %>%
   gt() %>%
   tab_header(title = "Demographic and Baseline Characteristics by Treatment") %>%
@@ -316,9 +331,6 @@ demo_table %>%
     control = "Treatment-as-Usual (N(%))"
   ) %>%
   fmt_missing(columns = everything(), missing_text = "")
-
-
-
 ```
 
 # Skills Assessment Documentation:
@@ -341,6 +353,36 @@ I believe this documentation shows through the RMD function 1) incline comments 
 
 1.  How well were participants retained? What is implied about the feasibility of a larger trial?
 
+    Sample Characteristics of the N= 40 are proportions for strata across intervention arm except for Age, Gender, Race/Ethnicity, and average annual household income Income (USD). Average scores for PHQ-9 and UCLA-LS-20 were simiilar across intervention arm, both at moderate severe depression and between 43 and 52 loneliness score. Among N=40 participants, treatment dosage average treatment dosage was 4.15 (SD = 0.919) out of 6 sessions. Qualitatively, n = 13 (65%) completed roughly 4 or more sessions (Full Treatment).
+
 2.  Does the intervention seem to reduce loneliness (primary) or depression (secondary)?
+    Mixed Model Repeat Measure ([MMRM](https://openpharma.github.io/mmrm/latest-tag/)) or ANOVA to look into the variance?
 
 3.  Are there participant characteristics (e.g., baseline loneliness or depression severity, attendance, or demographic characteristics) that appear to be associated with outcomes or that may influence how we interpret the intervention’s effects?
+
+    1.  Mixed Model Repeat Measure ([MMRM](https://openpharma.github.io/mmrm/latest-tag/)) with Demographic Charactertistics Age, Race/Ethnicity, Gender, and Income since those may be the most different between arms (Fisher's Test)
+
+```{r Question 1a, echo=FALSE, warning=FALSE, include=FALSE}
+
+#How well were participants retained? 
+
+
+```
+
+```{r Question 1b, echo=FALSE, warning=FALSE, include=FALSE}
+#What is implied about the feasibility of a larger trial?
+
+
+
+```
+
+```{r Question 2, echo=FALSE, warning=FALSE, include=FALSE}
+#Does the intervention seem to reduce loneliness (primary) or depression (secondary)?
+
+
+```
+
+```{r Question 3, echo=FALSE, warning=FALSE, include=FALSE}
+#Are there participant characteristics (e.g., baseline loneliness or depression severity, attendance, or demographic characteristics) that appear to be associated with outcomes or that may influence how we interpret the intervention’s effects?
+
+```
