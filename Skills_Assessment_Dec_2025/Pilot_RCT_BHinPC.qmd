@@ -2,10 +2,18 @@
 title: "Pilot_RCT_BHinPC"
 format: html
 author: "Cathea M. Carey, MPH"
-date: "12/8/25"
+date: "12/12/25"
 output:
-  powerpoint_presentation:
-    reference_doc: PPT_Template_16x9-A_2023.pptx # UW Branded Template A from: https://www.washington.edu/brand/templates/presentations/
+  #powerpoint_presentation:
+   # reference_doc: PPT_Template_16x9-A_2023.pptx # UW Branded Template A from: https://www.washington.edu/brand/templates/presentations/
+
+  html_document:
+    toc: true
+    toc_depth: 2
+    theme: flatly
+    code_folding: hide
+  pdf_document:
+    number_sections: true
 bibliography: references.bib
 ---
 
@@ -37,10 +45,14 @@ The Pre-Work before starting the assessment began with reviewing the "Skills_Ass
 
 -   **Caution:** Given the small sample size, external publications of findings should follow data suppression standards (such as Journals or Governmental entities).
 
-```{r ETL Part 1, echo=FALSE, warning=FALSE}
+```{r ETL Part 1, echo=FALSE, warning=FALSE, include=FALSE}
 library(readxl)
 library(purrr)
 library(dplyr)
+library(tidyr)
+library(janitor)
+library(gt)
+
 
 #Data is on external drive
 # Check driver for files
@@ -89,7 +101,7 @@ head(df)
 -   Missingness
     -   Create a Flag for records missing 1 or more elements (UCLA-LS-20; PHQ-9; Race/Ethnicity)
 
-```{r ETL Part 2, echo=FALSE, warning=FALSE}
+```{r ETL Part 2, echo=FALSE, warning=FALSE, results='hide'}
 # Create Calculated fields
 # Age (bins) - From Continuous Variable to Bins; suggested based on Histogram == 20 - 34, 35 - 49, 50 - 64, 64 and up
 hist(df$age) #review original field
@@ -115,8 +127,11 @@ table(df$raceethnicity_recoded)
 which(names(df) %in% c("ucla_b_1", "ucla_3_1", "ucla_6_1","phq_b_1", "phq_3_1", "phq_6_1", "attend_s1", "attend_s6"))
 
 df$phq_b_total <- rowSums((df[, 68:76])) # Baseline PHQ-9 total
+hist(df$phq_b_total) #review original field
 df$phq_3_total <- rowSums((df[, 77:85])) # 3 month PHQ-9 total
+hist(df$phq_3_total) #review original field
 df$phq_6_total <- rowSums((df[, 86:94])) # 6 month PHQ-9 total
+hist(df$phq_6_total) #review original field
 
 # PHQ-9 X Sub-categories (by time points) PHQ-9 scores of 5== mild, 10 == moderate, 15 ==moderately severe, and 20 severe depression
 df <- df %>% # Baseline PHQ-9 total
@@ -180,8 +195,11 @@ df <- df %>% #Factor levels
 
 # UCLA-LS-20 Total (by time points) 
 df$ucla_b_total <- rowSums((df[, 8:27])) # Baseline UCLA-LS-20 total
+hist(df$ucla_b_total) #review original field
 df$ucla_3_total <- rowSums((df[, 28:47])) # 3 month UCLA-LS-20 total
+hist(df$ucla_3_total) #review original field
 df$ucla_6_total <- rowSums((df[, 48:67])) # 6 month UCLA-LS-20 total
+hist(df$ucla_6_total) #review original field
 
 
 # UCLA-LS-20 X Sub-categories (by time points) cutoff at >= 39; >=43; and >=53
@@ -207,27 +225,26 @@ df <- df %>% # >= 39; >=43; and >=53
     )
 
 # Attendance (bins) - prepare for factor analysis of "treatment dosage"
+# Test look into Attendance as a continuous variable by recoding qual into quan
+values <- c("no" = 0, "partial" = 0.5, "yes" = 1)
+
+# Dosage Total
+df$trt_dosage_total <- rowSums(
+  sapply(df[, 95:100], function(x) values[x]),
+  na.rm = TRUE
+)
+hist(df$trt_dosage_total) #review original field
+
 # Doseage
 bh_dosage_total <- ncol(df[, 95:100])
 df$dosage_prop <- (rowSums(df[, 95:100] == "yes", na.rm = TRUE) + #treats yes as full dosage, partial as half dosage, no as missed dosage
                           0.5 * rowSums(df[, 95:100] == "partial", na.rm = TRUE)) / bh_dosage_total
 
-df$doseage_cat <- cut(
+df$trt_dosage <- cut(
   df$dosage_prop,
   breaks = c(-0.01, 0, 0.33, 0.66, 1),   # include 0 as its own interval
   labels = c("Control", "Minimal Intervention", "Partial Intervention", "Maximum Intervention")
 )
-
-
-# Test look into Attendance as a continuous variable by recoding qual into quan
-values <- c("no" = 0, "partial" = 0.5, "yes" = 1)
-
-# Convert and sum rows
-df$attend_s_total <- rowSums(
-  sapply(df[, 95:100], function(x) values[x]),
-  na.rm = TRUE
-)
-
 
 # Make subsets for potential comparison analysis and data quality check
 subset_BHarm_df <- subset(df, arm == "Intervention") #spot check to make sure left join was successful = correct attendance for intervention only
@@ -236,7 +253,73 @@ subset_TAUarm_df <- subset(df, arm == "Control") #spot check to make sure left j
 ### END OF ETL PART 2
 ```
 
-## Post-Table 1
+### Tables 1: Pilot Sample Characteristics (N=40)
+
+```{r Table 1, echo=FALSE, warning=FALSE}
+
+# Select variables
+demo_char_table1 <- df %>%
+  select(arm, age_range, gender, raceethnicity_recoded, phq_b_total, ucla_b_total, trt_dosage)
+
+# Ensure arm is a factor
+demo_char_table1$arm <- factor(demo_char_table1$arm, levels = c("Intervention", "Control"))
+
+# Separate categorical vs continuous variables
+categorical_vars <- c("age_range", "gender", "raceethnicity_recoded", "trt_dosage")
+continuous_vars <- c("phq_b_total", "ucla_b_total")
+
+# 1. Summarize categorical variables as N (%)
+cat_table <- demo_char_table1 %>%
+  select(arm, all_of(categorical_vars)) %>%
+  pivot_longer(cols = -arm, names_to = "characteristic", values_to = "value") %>%
+  filter(!is.na(value)) %>%
+  mutate(characteristic = recode(characteristic,
+                                 age_range = "Age (bin)",
+                                 gender = "Gender",
+                                 raceethnicity_recoded = "Race/Ethnicity",
+                                 trt_dosage = "Intervention Dosage")) %>%
+  group_by(characteristic, value, arm) %>%
+  summarise(n = n(), .groups = "drop") %>%
+  group_by(characteristic, arm) %>%
+  mutate(total = sum(n),
+         n_perc = paste0(n, " (", round(100*n/total,1), "%)")) %>%
+  select(characteristic, value, arm, n_perc) %>%
+  pivot_wider(names_from = arm, values_from = n_perc, values_fill = "0 (0%)") %>%
+  arrange(characteristic)
+
+# 2. Summarize continuous variables as Mean (SD)
+cont_table <- demo_char_table1 %>%
+  select(arm, all_of(continuous_vars)) %>%
+  pivot_longer(cols = -arm, names_to = "characteristic", values_to = "value") %>%
+  filter(!is.na(value)) %>%
+  mutate(characteristic = recode(characteristic,
+                                 phq_b_total = "PHQ-9 (Mean(SD))",
+                                 ucla_b_total = "UCLA - LS - 20 (Mean(SD))")) %>%
+  group_by(characteristic, arm) %>%
+  summarise(mean_sd = paste0(round(mean(value),1), " (", round(sd(value),1), ")"),
+            .groups = "drop") %>%
+  pivot_wider(names_from = arm, values_from = mean_sd)
+
+# 3. Combine categorical and continuous summaries
+demo_table <- bind_rows(cat_table, cont_table)
+
+# Clean column names
+demo_table <- demo_table %>% janitor::clean_names()
+
+# 4. Render GT table
+demo_table %>%
+  gt() %>%
+  tab_header(title = "Demographic and Baseline Characteristics by Treatment") %>%
+  cols_label(
+    value = "Characteristics",
+    intervention = "Intervention (N(%))",
+    control = "Treatment-as-Usual (N(%))"
+  ) %>%
+  fmt_missing(columns = everything(), missing_text = "")
+
+
+
+```
 
 # Skills Assessment Documentation:
 
@@ -253,3 +336,11 @@ Below is the R Code created to assess the following skills of the author (myself
 -   and overall clarity and accessibility of the communication of the above.
 
 I believe this documentation shows through the RMD function 1) incline comments and choices for project/team documentation and replicability, 2) use of a repository to decrease staff time needed to tailor communication findings to various outputs, and 3) RMD output with PowerPoint Presentation (PPT), Word Document or PDF (industry standard or open source static documents to review), and Webpage (HMTL) for easy intra-team QA/QI for the shared potential increase audience comprehension through multiple outputs with click of a button.
+
+## **Key Research Questions**
+
+1.  How well were participants retained? What is implied about the feasibility of a larger trial?
+
+2.  Does the intervention seem to reduce loneliness (primary) or depression (secondary)?
+
+3.  Are there participant characteristics (e.g., baseline loneliness or depression severity, attendance, or demographic characteristics) that appear to be associated with outcomes or that may influence how we interpret the intervention’s effects?
