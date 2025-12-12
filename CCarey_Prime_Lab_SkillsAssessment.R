@@ -1,44 +1,6 @@
----
-title: "Prime_Lab_SkillsAssessment"
-format: html
-author: "Cathea M. Carey, MPH"
-date: "12/12/25"
-output:
-  pdf_document:
-    number_sections: true
-    toc: true
-bibliography: references.bib
----
+#Author: Cathea M. Carey, MPH
+#Purpose: For Research Consultant 3 Skills Assessment due 10 am 12/12/25
 
-# Background
-
-Behavioral Health (BH) is defined as X. Commonly delivered in Y settings, and in the United States' health care system often are inaccessible to populations who would benefit from BH interventions due to reason A- (cite), reason B (cite), and reason C (cite).
-
-Primary Care (PC) is often a seen as a secondary health care setting that provides primary intervention for both physical and behavioral needs. PC access and utilization are associated with better outcome A - C.
-
-BH interventions in PC have the shown potential to 1) loneliness and 2) depression as this setting have the added benefit of primary intervention or initial identification while the patient is potentially more motivated in PC rather than waiting for a referral (cite) or co-located BH/MH on-site (cite).
-
-This small randomized control trial (RCT) aims to understand the feasibility of a BH intervention in Primary Care. The sample consists of 40 participants, equally weighted in the intervention (BH) and control (Treatment-as-usual or TAU). The data-set consists of intervention arm (BH/TAU), participant demographics (Age, Race/Ethnicity, Gender, and Income), measurement of outcomes (primary = loneliness; secondary = depression) at 3 time points (baseline, 3 months follow-up, and 6 months follow-up), and attendance for all 6 intervention session (Intervention arm = BH only).
-
-# Decision Logs
-
-## Pre-Extract, Transform, and Load (ETL) - Prior to Establishing the Environment
-
-The Pre-Work before starting the assessment began with reviewing the "Skills_Assessment_Instructions.docx" and "data_dictionary.xlsx" files. During Pre-Work for the Assessment, the following thoughts came to mind:
-
--   What are the standard bins or categories for the following known continuous variables to measure the outcomes (primary = loneliness; secondary = depression):
-
-    -   Age (for this research aim: Behavioral Health Interventions in Primary Care),
-    -   PHQ-9 (measure for secondary outcome = depression),
-    -   and UCLA - L20 (measure for primary outcome = loneliness)
-
--   **NOTE:** Gender outputs - Question what source(s) for outputs or standards for Gender were used? I've seen Gender reported as Gender Identify (a specific operationally defined construct with consistent industry standards) and Sexual Identity. I would suggest aligned with Office of Management and Budget's demographic standards back in 2024.
-
--   Additional Calculated field for Race/Ethnicity since a "self-described" output would likely result in small Ns.
-
--   **Caution:** Given the small sample size, external publications of findings should follow data suppression standards (such as Journals or Governmental entities).
-
-```{r ETL Part 1, echo=FALSE, warning=FALSE, include=FALSE}
 ## Data Extraction, Transformation, and final Load for Analysis
 
 # Packages
@@ -90,31 +52,7 @@ df <- left_join (df_outcomes, df_attendance, by = "record_id")
 # Check Head
 
 head(df) 
-### END OF ETL PART 1
-```
 
-## Post-ETL
-
-### Make Calculated Fields
-
--   Age (bins)
--   Race/Ethnicity (New Variable Names/Labels)
-    1.  Preserves the Categories with new field; one-hot encoding for select all option not needed
--   PHQ-9 Total (by time points)
--   PHQ-9 X Sub-categories (by time points)
-    -   [PHQ-9: Validity of a Brief Depression Severity Measure](https://onlinelibrary.wiley.com/doi/full/10.1046/j.1525-1497.2001.016009606.x) (@kroenke2001)
-        -   Validation suggests bins of PHQ-9 scores of 5== mild, 10 == moderate, 15 ==moderately severe, and 20 severe depression
--   UCLA-LS-20 Total (by time points)
--   UCLA-LS-20 X Sub-categories (by time points)
-    -   [UCLA - LS Scale Article](https://www.cambridge.org/core/journals/psychological-medicine/article/measuring-loneliness-a-headtohead-psychometric-comparison-of-the-3-and-20item-ucla-loneliness-scales/CF99BEB620AF61EAEDCF7B360312F994) (@gosling2024)
-        -   Sensitivity analysis suggests exploring cutoff at \>= 39; \>=43; and \>=53
--   Attendance (bins)
-    1.  Preserve time-point attendance; additional overall attendance output for high-level trend (signal and keeps option for treatment dosage effects).
-        1.  Prop = (full dose/'yes'+ 1/2 partial dose/'partial')/ total dosage (all 6 sessions)
-
-Note: Create a Flag for records missing 1 or more elements (UCLA-LS-20; PHQ-9; Race/Ethnicity)
-
-```{r ETL Part 2, echo=FALSE, warning=FALSE, results='hide'}
 # Create Calculated fields (Age, Race/Ethnicity, PHQ-9, UCLA - LS- 20, and creating Dosages as a function of Attendance in Invention Tx arm only)
 
 # Age (bins) - From Continuous Variable to Bins; 
@@ -294,12 +232,7 @@ subset_BHarm_df <- subset(df, arm == "Intervention") #spot check to make sure le
 subset_TAUarm_df <- subset(df, arm == "Control") #spot check to make sure left join was successful = correct attendance for intervention only
 
 
-### END OF ETL PART 2
-```
 
-### Tables 1: Pilot Sample Characteristics (N=40)
-
-```{r Table 1, echo=FALSE, warning=FALSE}
 # Suggested: Make a Table 1 (version is for internal but include total and use data suppression for small Ns)
 
 #Overall Dosage for Summary and to answer Q1-3
@@ -394,55 +327,11 @@ png("table_1_output.png", width = 1000, height = 800)
 grid.table(df)
 
 dev.off()
-##END
-```
 
-# Skills Assessment Documentation:
-
-## Rationale for Specific Output of R
-
-Below is the R Code created to assess the following skills of the author (myself):
-
--   Ability to handle and prepare real-world data,
-
--   strategies behind analysis choices,
-
--   interpretation of results in context of a small, pilot RCT,
-
--   and overall clarity and accessibility of the communication of the above.
-
-I believe this documentation shows through the RMD function 1) incline comments and choices for project/team documentation and replicability, 2) use of a repository to decrease staff time needed to tailor communication findings to various outputs, and 3) RMD output with PowerPoint Presentation (PPT), Word Document or PDF (industry standard or open source static documents to review), and Webpage (HMTL) for easy intra-team QA/QI for the shared potential increase audience comprehension through multiple outputs with click of a button.
-
-## **Key Research Questions**
-
-1.  How well were participants retained? What is implied about the feasibility of a larger trial?
-
-    Sample Characteristics of the N= 40 are proportions for strata across intervention arm except for Age, Gender, Race/Ethnicity, and average annual household income Income (USD). Average scores for PHQ-9 and UCLA-LS-20 were similar across intervention arm, both at moderate severe depression and between 43 and 52 loneliness score. Among N=40 participants, treatment dosage average treatment dosage was 4.15 (SD = 0.919) out of 6 sessions. Qualitatively, n = 13 (65%) completed roughly 4 or more sessions (Full Treatment).
-
-2.  Does the intervention seem to reduce loneliness (primary) or depression (secondary)?
-
-    Generalized Linear Models or Mixed Model Repeat Measure ([MMRM](https://openpharma.github.io/mmrm/latest-tag/)) or ANOVA to look into the variance?
-
-    Would suggest just starting with a T test - Wilcoxon Signed Rank Test and treat Outcome as continuous for an initial test for significance.
-
-3.  Are there participant characteristics (e.g., baseline loneliness or depression severity, attendance, or demographic characteristics) that appear to be associated with outcomes or that may influence how we interpret the intervention’s effects?
-
-    1.  Mixed Model Repeat Measure ([MMRM](https://openpharma.github.io/mmrm/latest-tag/)) with Demographic Characteristics Age, Race/Ethnicity, Gender, and Income since those may be the most different between arms (Fisher's Test?)
-
-```{r Test, echo=FALSE, warning=FALSE}
 
 ## Code for Key Research Questions
 
 # Question 1 (part A) How well were participants retained? 
-
-retention_table <- df %>%
-  summarise(
-    mean_rate = mean(rate, na.rm = TRUE),
-    sd_rate = sd(rate, na.rm = TRUE)
-  )
-
-# Print the table
-print(summary_table)
 
 
 # Question 1 (part B) What is implied about the feasibility of a larger trial?
@@ -458,6 +347,3 @@ test1 <- wilcox.test(df$ucla_b_total, df$ucla_6_total, paired = TRUE, conf.int =
 
 #rq(outcome ~ arm + age + gender + income, data = df, tau = 0.5)
 
-
-
-```
