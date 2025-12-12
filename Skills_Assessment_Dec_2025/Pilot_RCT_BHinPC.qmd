@@ -42,16 +42,18 @@ The Pre-Work before starting the assessment began with reviewing the "Skills_Ass
 ## Data Extraction, Transformation, and final Load for Analysis
 
 # Packages
-library(readxl)
-library(purrr)
-library(dplyr)
-library(tidyr)
-library(janitor)
-library(gt)
-library(gridExtra)
-library(quantreg)
-library(tibble)
-library(broom)
+          library(readxl)
+          library(purrr)
+          library(dplyr)
+          library(tidyr)
+          library(janitor)
+          library(gt)
+          library(gridExtra)
+          library(quantreg)
+          library(tibble)
+          library(broom)
+          library(effectsize)
+          library(ggplot2)
 
 # Load files and establish environment (optional)
 
@@ -411,43 +413,62 @@ Below is the R Code created to assess the following skills of the author (myself
 
 -   and overall clarity and accessibility of the communication of the above.
 
-I believe this documentation shows through the RMD function 1) incline comments and choices for project/team documentation and replicability, 2) use of a repository to decrease staff time needed to tailor communication findings to various outputs, and 3) RMD output with PowerPoint Presentation (PPT), Word Document or PDF (industry standard or open source static documents to review), and Webpage (HMTL) for easy intra-team QA/QI for the shared potential increase audience comprehension through multiple outputs with click of a button.
+I believe this documentation shows through the RMD function 1) in line comments and choices for project/team documentation and replicability, 2) use of a repository to decrease staff time needed to tailor communication findings to various outputs, and 3) RMD output with PowerPoint Presentation (PPT), Word Document or PDF (industry standard or open source static documents to review), and Webpage (HMTL) for easy intra-team QA/QI for the shared potential increase audience comprehension through multiple outputs with click of a button.
 
 ## **Key Research Questions**
 
 1.  How well were participants retained? What is implied about the feasibility of a larger trial?
 
-    Sample Characteristics of the N= 40 are proportions for strata across intervention arm except for Age, Gender, Race/Ethnicity, and average annual household income Income (USD). Average scores for PHQ-9 and UCLA-LS-20 were similar across intervention arm, both at moderate severe depression and between 43 and 52 loneliness score. Among N=40 participants, treatment dosage average treatment dosage was 4.15 (SD = 0.919) out of 6 sessions. Qualitatively, n = 13 (65%) completed roughly 4 or more sessions (Full Treatment).
+    A:Among n=20 participants, treatment dosage average treatment dosage was 4.15 (SD = 0.919) out of 6 sessions. *This suggests across the entire treatment dosage (6 sessions) attendance and presumed dosage of treatment is feasible in for this intervention design.* Qualitatively, n = 13 (65%) completed roughly 4 or more sessions (Full Treatment).
+
+    Note: Sample Characteristics of the N= 40 are proportions for strata across intervention arm except for Age, Gender, Race/Ethnicity, and average annual household income Income (USD). Average scores for PHQ-9 and UCLA-LS-20 were similar across intervention arm, both at moderate severe depression and between 43 and 52 loneliness score.
+
+    **Test the effect of possibly differences in demographic characteristics (i.e., income) and their relationship with other covariates (Race/Ethnicity and Age) on the causal pathway.**
 
 2.  Does the intervention seem to reduce loneliness (primary) or depression (secondary)?
 
-    Generalized Linear Models or Mixed Model Repeat Measure ([MMRM](https://openpharma.github.io/mmrm/latest-tag/)) or ANOVA to look into the variance?
+    A: Cohen's d showed a small effect, further testing is recommended.
 
-    Would suggest just starting with a T test - Wilcoxon Signed Rank Test and treat Outcome as continuous for an initial test for significance.
+    Generalized Linear Models or Mixed Model Repeat Measure ([MMRM](https://openpharma.github.io/mmrm/latest-tag/)) or ANOVA to look into the variance for further exploration. Would suggest just starting with tailor test for small sample sizes - Wilcoxon Signed Rank Test and treat Outcome as continuous for an initial test for significance. Larger sample would warrant a GLM or model with less rigid parameter requirements.
 
 3.  Are there participant characteristics (e.g., baseline loneliness or depression severity, attendance, or demographic characteristics) that appear to be associated with outcomes or that may influence how we interpret the intervention’s effects?
 
-    1.  Mixed Model Repeat Measure ([MMRM](https://openpharma.github.io/mmrm/latest-tag/)) with Demographic Characteristics Age, Race/Ethnicity, Gender, and Income since those may be the most different between arms (Fisher's Test?)
+    Mixed Model Repeat Measure ([MMRM](https://openpharma.github.io/mmrm/latest-tag/)) with Demographic Characteristics Age, Race/Ethnicity, Gender, and Income since those may be the most different between arms (Fisher's Test?). Again - would want to refer to the assumed relationships and interactions (DAG == casual pathway).
 
-```{r Test, echo=FALSE, warning=FALSE}
+```{r Test, echo=FALSE, warning=FALSE, include=FALSE}
 
 ## Code for Key Research Questions
-
 # Question 1 (part A) How well were participants retained? 
-
-retention_table <- df %>%
-  summarise(
-    mean_rate = mean(rate, na.rm = TRUE),
-    sd_rate = sd(rate, na.rm = TRUE)
-  )
-
-# Print the table
-print(summary_table)
-
-
+#hist(subset_BHarm_df$attend_s1)
+#hist(subset_BHarm_df$attend_s2)
+#hist(subset_BHarm_df$attend_s3)
+#hist(subset_BHarm_df$attend_s4)
+#hist(subset_BHarm_df$attend_s5)
+#hist(subset_BHarm_df$attend_s6)
 # Question 1 (part B) What is implied about the feasibility of a larger trial?
+avg_trt_dosage
+sd_trt_dosage
 
 # Question 2 Does the intervention seem to reduce loneliness (primary) or depression (secondary)?
+
+# Cohen's d for effect size
+cohens_d(ucla_6_total ~ arm, data = df)
+
+
+
+# Paired Wilcoxon
+#test0 <- wilcox.test(df$ucla_b_total, df$ucla_6_total, paired = TRUE, conf.int = TRUE, conf.level = 0.95) # Not completed
+
+
+# Question 3 Are there participant characteristics (e.g., baseline loneliness or depression severity, attendance, or demographic characteristics) that appear to be associated with outcomes or that may influence how we interpret the intervention’s effects?
+hist(df$income)
+
+ income_plot <- ggplot(df, aes(x = income, fill = arm, color = arm)) +
+  geom_histogram(position = "identity", alpha = 0.5, bins = 30) +
+  labs(title = "Income by Arm", x = "Income", y = "Frequency") +
+  theme_classic()
+ 
+ ### END due to time CCAREY 12/12/25
 
 
 # Paired Wilcoxon
