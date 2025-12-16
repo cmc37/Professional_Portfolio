@@ -295,6 +295,7 @@ subset_BHarm_df <- subset(df, arm == "Intervention") #spot check to make sure le
 
 subset_TAUarm_df <- subset(df, arm == "Control") #spot check to make sure left join was successful = correct attendance for intervention only
 
+hist(subset_BHarm_df$trt_dosage_total) #review original field and print
 
 ### END OF ETL PART 2
 ```
@@ -305,8 +306,8 @@ subset_TAUarm_df <- subset(df, arm == "Control") #spot check to make sure left j
 # Suggested: Make a Table 1 (version is for internal but include total and use data suppression for small Ns)
 
 #Overall Dosage for Summary and to answer Q1-3
+#hist(subset_BHarm_df$trt_dosage_total) # commented out for render purposes
 
-hist(subset_BHarm_df$trt_dosage_total) #review original field and print
 #average
 avg_trt_dosage <- mean(subset_BHarm_df$trt_dosage_total)
 #standard deviation
