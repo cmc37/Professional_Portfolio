@@ -7,11 +7,14 @@
 University of Washington (Seattle, WA)
 
 -   Masters of Public Health (Health Services, Now Health Systems and Population)
--   Certificate in Demography (Center of Social, Demography, and Ecology)
+    -   Certificate in Demography (Center of Social, Demography, and Ecology)
+-   Bachelors in Science (Psychology)
+-   Bachelors of Arts (Interdisciplinary Visual Art)
+    -   With Honors
 
 **Short bio:**
 
-Mixed-methods researcher focused on implementation science, health equity, homelessness policy, and systems evaluation.
+Mixed-methods researcher focused on implementation science, health equity, homelessness policy, and systems evaluation. 10+ years of experience as a Project Manager and Research Analytics Professional leading complex, cross-sector initiatives ranging in various social service foci and innovative methodologies including those in research and service delivery. Skilled in coordinating multi-stakeholder projects, translating data into operational strategy, and implementing scalable systems analysis for evaluation and reporting. Unique expertise in equitable strategic planning, stakeholder engagement, analytic problem-solving to improve program outcomes, and organizational effectiveness. 
 
 ------------------------------------------------------------------------
 
@@ -26,11 +29,13 @@ Mixed-methods researcher focused on implementation science, health equity, homel
     -   [“I Wasn't Presented With Options”: Perspectives of Black Veterans Receiving Care for Uterine Fibroids in the Veterans Health Administration](https://www.whijournal.com/article/S1049-3867(23)00134-2/abstract "Qualitative Research - Black Women - Reproductive Health")
     -   [Help-Seeking Patterns and Barriers to Care Among Latino Immigrant Men with Unhealthy Alcohol Use](https://link.springer.com/article/10.1007/s40615-021-01039-y "Migration and Health - Demographics - Access and Care Disparities")
 -   Selected Reports and Manuscripts
-    -   [King County Regional Homelessness Authority. (2025). 2024 Point-in-Time Count: King County. https://kcrha.org/wp-content/uploads/2025/05/Point-in-Time-Count-2024_King-County_final.pdf](https://kcrha.org/wp-content/uploads/2025/05/Point-in-Time-Count-2024_King-County_final.pdf "Homelessness Census - RDS Methodology - Systems and Policy")
+    -   Bossick, A. S., Bossick, N. R., Callegari, L. S., Carey, C. M., Johnson, H., & Katon, J. G. (2022). *Experiences of racism and postpartum depression symptoms, care-seeking, and diagnosis*. *Archives of Women’s Mental Health, 25*(4), 717–727. <https://doi.org/10.1007/s00737-022-01232-w>
 
-    -   [Kanter, J. W., Williams, M. T., Kuczynski, A. M., Corey, M. D., Parigoris, R. M., Carey, C. M., Manbeck, K. E., Wallace, E. C., & Rosen, D. C. (2020). The measurement and structure of microaggressive communications by White people against Black people. *Race and Social Problems,* 12(4), 323–343. https://doi.org/10.1007/s12552-020-09298-w](https://psycnet.apa.org/record/2020-59710-001 "The Measurement and Structure of Microagressive Communication by White People Against Black People.")
+    -   Bombardier, C. H., Motl, R. W., Benedict, R. H. B., Temkin, N., Qian, P., Alexander, K., Evans, A., Thomas, A., Toms, K., Carey, C. M., & Kraft, G. H. (2021). *Exercise training and cognition in multiple sclerosis: The GET Smart trial protocol*. *Contemporary Clinical Trials, 104*, 106331. <https://doi.org/10.1016/j.cct.2021.106331>
 
-    -   [Kerns, S. E., McCormick, E., Negrete, A., Carey, C., Haaland, W., & Waller, S. (2017). Predicting post-training implementation of a parenting intervention. Journal of Children's Services, 12(4), 302-315.](https://www.emerald.com/jcs/article-abstract/12/4/302/217753/Predicting-post-training-implementation-of-a?redirectedFrom=fulltext "Predicting post-training implementation of a parenting intervention.")
+    -   Kanter, J. W., Williams, M. T., Kuczynski, A. M., Corey, M. D., Parigoris, R. M., Carey, C. M., Manbeck, K. E., Wallace, E. C., & Rosen, D. C. (2020). The measurement and structure of microaggressive communications by White people against Black people. *Race and Social Problems,* 12(4), 323–343. <https://doi.org/10.1007/s12552-020-09298-w>
+
+    -   Kerns, S. E., McCormick, E., Negrete, A., Carey, C., Haaland, W., & Waller, S. (2017). Predicting post-training implementation of a parenting intervention. Journal of Children's Services, 12(4), 302-315. <https://doi.org/10.1108/JCS-04-2017-0015>
 
 ------------------------------------------------------------------------
 
@@ -38,11 +43,11 @@ Mixed-methods researcher focused on implementation science, health equity, homel
 
 ### **COMPLETE PROFESSIONAL EXPERIENCE**
 
-**August 2022 – Present; Evaluations and Analytics Coordinator (Sr. Data Analyst),** Full-Time, King County Regional Homelessness Authority, Seattle, WA, Projects: Creating population specific (Veterans, Incarcerated, and AI/AN) By Name Lists, Point-In-Time Count, Governing Board Reports, All Research Related Data Request, Data Request Tracking and Management, Data Sharing Agreements and Work Orders, and Systems Evaluations.
+**August 2022 – Present; Evaluations and Analytics Coordinator (Sr. Data Analyst),** Full-Time, King County Regional Homelessness Authority, Seattle, WA, Projects: Creating population specific (Veterans, Incarcerated, and AI/AN) By Name Lists, Point-In-Time Count, Governing Board Reports, All Research Related Data Request, Data Request Project Management and Oversite, Data Sharing Agreements and Work Orders, and Systems Evaluations.
 
-**February 2022 – July 2022;** Qualitative Reseracher,Consultant, Senturia Consulting, Seattle, WA, Project: Colorado Park and Community Engagement (Bureau of Land Management; Trust for Public Land
+**February 2022 – July 2022;** Qualitative Researcher,Consultant, Senturia Consulting, Seattle, WA, Project: Colorado Park and Community Engagement (Bureau of Land Management; Trust for Public Land
 
-**September 2019 – July 2022;** Research Health Science Specialist (Project Manager and Mixed-Methods Researcher),Full-Time, Department of Veterans Affairs, VAPSHCS, Seattle, WA, Project: Understanding Racial Inequities in Fibroids Care for Veterans; PIs: Jodie G. Katon, PhD., MS and Lisa S. Callegari, MD, MPH
+**September 2019 – July 2022;** Research Health Science Specialist (Project Manager and Mixed-Methods Researcher),Full-Time, Department of Veterans Affairs, VAPSHCS, Seattle, WA, Project: Understanding Racial Inequities in Fibroid Care for Veterans; PIs: Jodie G. Katon, PhD., MS and Lisa S. Callegari, MD, MPH
 
 **July 2018 – March 2019; Research Assistant**, Part-Time; University of Washington, School of Medicine, Dept. of Rehab Med; Project: GET Smart Multiple Sclerosis Randomized Control Trial; PI: Charles Bombardier, PhD, Department of Rehabilitation Medicine
 
@@ -125,7 +130,5 @@ May - December 2018; Practicum Student, Hourly, Valley Cities - Rainier Beach, S
     -   Large_Dataset_Practice_draft
 
         -   Samples
-            -   Governing Board Report - pending
-            -   BNL (Active Status) Methodology Documentation - pending
 
 ------------------------------------------------------------------------
