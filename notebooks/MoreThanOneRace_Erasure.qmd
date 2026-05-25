@@ -1,0 +1,34 @@
+---
+title: "More than One Race and Erasure in Demographic"
+format: html
+bibliography: references.bib
+---
+
+# Background
+
+## Seed of the Question:
+
+Stemmed from early work on self-identification and census data; conversations with colleagues and collaborators.
+
+Question:
+
+How does the erasure of "racialized" experiences in America through the function of collecting and reducing race to "only" or "more than one" perpetuates harm (such as under counting or devaluing)
+
+## Literature Review:
+
+Dr. Camara Jones "Levels of Racism: A Theoretic Framework and a Gardener's Tale"@levelso2000:
+
+-   Institutional Racism
+-   Mediated Racism
+-   Internalized Racism
+
+Kenneth Prewitt "The Census Race Classification: Is it Doing Its Job?"@prewitt2018
+
+-   "racialized" immigrant groups and "whitened" immigrant groups
+-   health, education, and employment
+    -   Note: often the demographer's key metrics to show cohort effects
+-   strong racial self-identification among individuals who identify as white, Black, or Asian; lower racial self-identification among individuals who identify as Hispanic/Latino/a/x/e, Indigenous, and "Biracial"
+    -   Note: different enough for lowering reliability of race data.
+
+        -   Question: Could this be a design feature of enumeration efforts and trauma loop?
+-   
