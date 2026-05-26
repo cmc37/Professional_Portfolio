@@ -1,8 +1,33 @@
 ------------------------------------------------------------------------
 
-# Portfolio
+# README
 
-**Education:**
+------------------------------------------------------------------------
+
+## Professional Portfolio
+
+**Purpose:** A sample R environment to demonstrate analytic skills and technique, with a cache of select recent project (cleaned for external audiences) ideations.
+
+-   outputs
+-   scripts
+    -   clean_data
+    -   MultiRacial_Exploratory_Data_Analysis
+    -   run_instructions
+    -   Sample_Codes
+-   notebooks
+    -   Analysis_Template
+
+    -   Inference_Template
+
+    -   Large_Dataset_Practice_draft
+
+    -   MoreThanOneRace_Erasure
+
+    -   references.bib
+
+------------------------------------------------------------------------
+
+## **Education:**
 
 University of Washington (Seattle, WA)
 
@@ -11,10 +36,6 @@ University of Washington (Seattle, WA)
 -   Bachelors in Science (Psychology)
 -   Bachelors of Arts (Interdisciplinary Visual Art)
     -   With Honors
-
-**Short bio:**
-
-Mixed-methods researcher focused on implementation science, health equity, homelessness policy, and systems evaluation. 10+ years of experience as a Project Manager and Research Analytics Professional leading complex, cross-sector initiatives ranging in various social service foci and innovative methodologies including those in research and service delivery. Skilled in coordinating multi-stakeholder projects, translating data into operational strategy, and implementing scalable systems analysis for evaluation and reporting. Unique expertise in equitable strategic planning, stakeholder engagement, analytic problem-solving to improve program outcomes, and organizational effectiveness. 
 
 ------------------------------------------------------------------------
 
@@ -102,28 +123,3 @@ May - December 2018; Intern, Hourly, Bloodwork, Seattle, WA, Project: Diversity/
 May - December 2018; Practicum Student, Hourly, Valley Cities - Rainier Beach, Seattle, WA, Project: Community Needs Assessment; Supervisor:
 
 -   Produced a report on immediate needs of the Rainier Beach catchment area surrounding the new branch site.
-
-------------------------------------------------------------------------
-
-## **Table of Contents: Professional Portfolio**
-
-**Purpose:** A sample R environment to demonstrate analytic skills and technique, with a cache of select recent project (cleaned for external audiences) ideations.
-
--   outputs
--   scripts
-    -   clean_data
-    -   MultiRacial_Exploratory_Data_Analysis
-    -   run_instructions
-    -   Sample_Codes
--   notebooks
-    -   Analysis_Template
-
-    -   Inference_Template
-
-    -   Large_Dataset_Practice_draft
-
-    -   MoreThanOneRace_Erasure
-
-    -   references.bib
-
-------------------------------------------------------------------------
