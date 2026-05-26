@@ -41,7 +41,11 @@ Dr. Kenneth Prewitt (2018):"The Census Race Classification: Is it Doing Its Job?
         -   Question: Could this be a design feature of enumeration efforts and trauma loop?
 -   Quick list of articles regarding "racialized" groups and classification for future exploration, thoughts synthesizing:
     -   Drs. Patino, Gómez & Pinckney (2025): "Historical and Sociolinguistic Insights for Recreation Researchers: Understanding the Terms and Evolution of Hispanic, Latino, and Latinox"@patino2025
+        -   Language and self-identification; Labeling
     -   Dr. Ivis García (2020): "Cultural Insights for Planners: Understanding the Terms Hispanic, Latino, and Latinx"@garcía2020
+        -   Policy implications and self-identification
+    -   Dr. Livny (2026) "Don’t count me out: erasure of ethnicity and ethnic groups from national censuses"@livny2026
+        -   Systematic Inclusion and Representation
 
 ```{r Table, echo=FALSE}
 
