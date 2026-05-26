@@ -30,15 +30,70 @@ R_labels <- c(
   SORA  = "B03002_008", #Label for "Some Other Race Alone" 
   TOMR  = "B03002_009"  #Label for "Two or More Races
 )
+#(Race) Labels for Printing/Visuals
+R_var_labels <- c(
+  AAA = "Asian or Asian American",
+  AIANI = "American Indian, Alaskan Native, or Indigenous",
+  BAAA = "Black, African, or African American",
+  HL =  "Hispanic or Latino/a/x/e", 
+  #MENA NOT PROJECTED OR ESTIMATED 
+  NHPI =  "Native Hawaiian or Pacific Islander",
+  W =  "White",
+  SORA = "Some Other Race Alone",
+  TOMR = "Two or More Races"
+)
 
+#Call Census Tract Level Data
 wa_race <- get_acs(
-  geography = "county",
+  geography = "tract",
   state = "WA",
+  county = "King",
   variables = R_labels,
   year = 2023
 )
 
+#Make a copy of data for objects
+king_census_trace_race <- wa_race
 
-#racialidentity_combo <-
-  
-#racialidentity_mutexcl <- 
+#Mapping Data
+wa_race_zip <- get_acs(
+  geography = "zcta",
+  variables = R_labels,
+  year = 2020,
+  geometry = TRUE
+)
+
+#Template: CDC Places Data
+wa_table <- wa_places %>%
+  select(locationname, 
+         measure, 
+         data_value, 
+         low_confidence_limit, 
+         high_confidence_limit)
+wa_table
+
+
+# king_places <- placescdc_data %>%
+#   filter(stateabbr == "WA",
+#          countyname == "King County") %>%
+#   select(
+#     countyname,
+#     measure,
+#     data_value,
+#     low_confidence_limit,
+#     high_confidence_limit
+#   )
+# 
+# king_places
+
+king_table <- king_places %>%
+  st_drop_geometry() %>%
+  select(measure, data_value, low_confidence_limit, high_confidence_limit)
+
+#Wide template: CDC Places Data
+king_wide <- king_places %>%
+  select(measure, data_value) %>%
+  pivot_wider(names_from = measure,
+              values_from = data_value)
+
+king_wide

@@ -1,5 +1,5 @@
 ---
-title: "More than One Race and Erasure in Demographic"
+title: "'More than One Race' and Erasure in Demographics"
 format: html
 bibliography: references.bib
 ---
@@ -24,13 +24,13 @@ How does the erasure of "racialized" experiences in America through the function
 
 ## Literature Review:
 
-Dr. Camara Jones "Levels of Racism: A Theoretic Framework and a Gardener's Tale"@levelso2000:
+Dr. Camara Jones (2000) "Levels of Racism: A Theoretic Framework and a Gardener's Tale"@levelso2000:
 
 -   Institutional Racism
 -   Mediated Racism
 -   Internalized Racism
 
-Kenneth Prewitt "The Census Race Classification: Is it Doing Its Job?"@prewitt2018
+Dr. Kenneth Prewitt (2018):"The Census Race Classification: Is it Doing Its Job?"@prewitt2018
 
 -   "racialized" immigrant groups and "whitened" immigrant groups
 -   health, education, and employment
@@ -39,11 +39,61 @@ Kenneth Prewitt "The Census Race Classification: Is it Doing Its Job?"@prewitt20
     -   Note: different enough for lowering reliability of race data.
 
         -   Question: Could this be a design feature of enumeration efforts and trauma loop?
--   ARTICLE
--   ARTICLE
+-   Quick list of articles regarding "racialized" groups and classification for future exploration, thoughts synthesizing:
+    -   Drs. Patino, Gómez & Pinckney (2025): "Historical and Sociolinguistic Insights for Recreation Researchers: Understanding the Terms and Evolution of Hispanic, Latino, and Latinox"@patino2025
+    -   Dr. Ivis García (2020): "Cultural Insights for Planners: Understanding the Terms Hispanic, Latino, and Latinx"@garcía2020
 
-```{r}
+```{r Table, echo=FALSE}
+
+#Create Table for ONLY Version
+king_census_trace_race  %>%
+  mutate(
+    # IMPORTANT: Re-Label Racial Identities
+    variable = case_when(
+      variable == "AAA" ~ "Asian or Asian American",
+      variable == "AIANI" ~ "American Indian, Alaskan Native, or Indigenous",
+      variable == "BAAA" ~ "Black, African, or African American",
+      variable == "HL" ~ "Hispanic or Latino/a/x/e",
+      #MENA NOT PROJECTED OR ESTIMATED  
+      variable == "NHPI" ~ "Native Hawaiian or Pacific Islander",
+      variable == "W" ~ "White",
+      variable == "SORA" ~ "Some Other Race Alone",
+      variable == "TOMR" ~ "Two or More Races",      
+      TRUE ~ variable
+    ),
+    # Estimate and MOE
+    estimate = round(estimate, 2),
+    moe = round(moe, 2),
+    # Cleaner Est & MOE
+    est_moe = paste0(
+      round(estimate, 1),
+      " (±",
+      round(moe, 1),
+      ")"
+    )
+  ) %>%
+  select(GEOID, NAME, variable, est_moe) %>%
+  datatable(
+    filter = "top",   # adds filter boxes
+    options = list(
+      pageLength = 20,
+      autoWidth = TRUE
+    ) 
+    #%>%
+    #   select(GEOID, NAME, variable, est_moe) %>%
+    #   reactable(
+    #     filterable = TRUE,
+    #     searchable = TRUE
+    # )
+  )
 
 
+```
+
+```{r Map, echo=FALSE}
+
+ggplot(wa_race_zip) +
+  geom_sf(aes(fill = estimate)) +
+  theme_minimal()
 
 ```

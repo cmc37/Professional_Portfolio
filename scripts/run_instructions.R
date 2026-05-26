@@ -9,6 +9,10 @@ library(httr)
 library(jsonlite)
 library(shiny)
 library(flexdashboard)
+library(reactable)
+library(dplyr)
+library(DT)
+library(ggplot2)
 
 #Census API - run lines 16-17 to initiate connection
 library(tidyverse)
@@ -18,25 +22,62 @@ library(tidycensus)
 
 #Data is on external drive
 #check for files
-list.files("/Volumes/LaCie/DropBox/Github/data/")
+#list.files("/Volumes/")
 # Corrected file path 
-file_path <- "/Volumes/LaCie/DropBox/Github/data/AHRF 2023-2024 CSV/ahrf2024_Feb2025.csv"  
+#file_path1 <-
 
 # Read CSV
-ahrf_data <- read.csv(file_path, stringsAsFactors = FALSE)
+#ahrf_data <- read.csv(file_path1, stringsAsFactors = FALSE)
 
-# Inspect first few rows
-head(ahrf_data)
-str(ahrf_data)
+
 
 # Corrected file path 
-file_path <- "/Volumes/LaCie/DropBox/Github/data/PLACES__Local_Data_for_Better_Health,_County_Data_2024_release_20251128.csv"  
+#file_path2 <-
 
 # Read CSV
-placescdc_data <- read.csv(file_path, stringsAsFactors = FALSE)
+#placescdc_data <- read.csv(file_path2, stringsAsFactors = FALSE)
+library(readr)
 
-# Inspect first few rows
-head(placescdc_data)
-str(placescdc_data)
+#Template
+#url0 <- "https://data.cdc.gov/resource/eav7-hnsx.csv?$limit=50000"
+#placescdc_data <- read_csv(url0)
+#WA State ONLY
+  url1 <- paste0(
+    "https://data.cdc.gov/resource/eav7-hnsx.csv?",
+    "$where=stateabbr='WA'",
+    "&$limit=50000"
+  )
+  wa_places <- read_csv(url1)
+
+#King County ONLY - filter from wa_places
+  #read as shape file
+  wa_places_sf <- st_as_sf(
+    wa_places,
+    wkt = "geolocation",
+    crs = 4326
+  )
+  # King County geometry is valid
+  ## confirm sf worked
+  st_geometry_type(wa_places_sf)
+  #King County Boundary
+  king <- counties(state = "WA", cb = TRUE, class = "sf") %>%
+    filter(NAME == "King")
+  st_geometry_type(king)
+  king_places <- wa_places_sf[king, , op = st_within]
+ # CRS mismatch
+  st_crs(wa_places_sf)
+  st_crs(king)
+  
+  # IF CRS FAILS AKA MISMATCH RUN THIS:
+  # wa_places_sf <- st_transform(wa_places_sf, 4326)
+  # king <- st_transform(king, 4326)
+  
+  king_places <- st_join(
+    wa_places_sf,
+    king,
+    join = st_within
+  ) %>%
+    filter(!is.na(NAME))
+  
 
 ### END - NOW HAVE CONNECTED DATA FILES FOR CLEANING AND ANALYSIS
