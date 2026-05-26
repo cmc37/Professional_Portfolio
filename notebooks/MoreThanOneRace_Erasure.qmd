@@ -46,6 +46,19 @@ Dr. Kenneth Prewitt (2018):"The Census Race Classification: Is it Doing Its Job?
         -   Policy implications and self-identification
     -   Dr. Livny (2026) "Don’t count me out: erasure of ethnicity and ethnic groups from national censuses"@livny2026
         -   Systematic Inclusion and Representation
+    -   Drs on behalf of Society of Epidemiologic Research Diversity and Inclusion Committee "Assessing Representation and Perceived Inclusion Among Members of the Society for Epidemiologic Research"@devilbiss2020
+        -   Political Affiliation, Self-Identification, and Measured Social Participation
+
+### Wire-Framing Framework:
+
+\~\~\~SYSTEMS THINKING; language and bias
+
+| Keyword           | Scholar(s)       | Constructs                |
+|-------------------|------------------|---------------------------|
+| "Governmentality" | Michel Foucault  | knowledge, power, systems |
+|                   |                  |                           |
+|                   |                  |                           |
+|                   |                  |                           |
 
 ```{r Table, echo=FALSE}
 
