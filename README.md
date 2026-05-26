@@ -107,19 +107,12 @@ May - December 2018; Practicum Student, Hourly, Valley Cities - Rainier Beach, S
 
 ## **Table of Contents: Professional Portfolio**
 
-**Purpose:** A sample R environment to demonstrate analytic skills and technique, with a cache of select recent project (cleaned for external audiences).
+**Purpose:** A sample R environment to demonstrate analytic skills and technique, with a cache of select recent project (cleaned for external audiences) ideations.
 
--   Skills_Assessment_Dec_2025
-    -   data_dictionary
-    -   pilot_rct_data
-    -   Skills_Assessment_Instructions
--   data
-    -   AHRF
-    -   PLACES (CDC)
-    -   sdoh_data
 -   outputs
 -   scripts
     -   clean_data
+    -   MultiRacial_Exploratory_Data_Analysis
     -   run_instructions
     -   Sample_Codes
 -   notebooks
@@ -129,6 +122,8 @@ May - December 2018; Practicum Student, Hourly, Valley Cities - Rainier Beach, S
 
     -   Large_Dataset_Practice_draft
 
-        -   Samples
+    -   MoreThanOneRace_Erasure
+
+    -   references.bib
 
 ------------------------------------------------------------------------
