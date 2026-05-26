@@ -6,11 +6,19 @@ bibliography: references.bib
 
 # Background
 
+```{r setup, include=FALSE}
+#Set Up Environment
+source("~/Documents/GitHub/Portfolio/Portfolio/scripts/run_instructions.R")
+#Run Transformations
+source("~/Documents/GitHub/Portfolio/Portfolio/scripts/MultiRacial_Exploratory_Data_Analysis.R")
+
+```
+
 ## Seed of the Question:
 
 Stemmed from early work on self-identification and census data; conversations with colleagues and collaborators.
 
-Question:
+## Question:
 
 How does the erasure of "racialized" experiences in America through the function of collecting and reducing race to "only" or "more than one" perpetuates harm (such as under counting or devaluing)
 
@@ -31,4 +39,11 @@ Kenneth Prewitt "The Census Race Classification: Is it Doing Its Job?"@prewitt20
     -   Note: different enough for lowering reliability of race data.
 
         -   Question: Could this be a design feature of enumeration efforts and trauma loop?
--   
+-   ARTICLE
+-   ARTICLE
+
+```{r}
+
+
+
+```
